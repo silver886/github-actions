@@ -1,0 +1,19 @@
+name: Setup pnpm
+description: Setup pnpm 7 and clean install dependencies
+
+runs:
+  using: composite
+  steps:
+    - name: Cache pnpm modules
+      uses: actions/cache@v3
+      with:
+        path: ~/.pnpm-store
+        key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-
+    - name: Clean install dependencies
+      uses: pnpm/action-setup@v2
+      with:
+        version: 7
+        run_install: |
+          args: [--frozen-lockfile]

@@ -4,6 +4,7 @@ on:
   workflow_call:
     inputs:
       test:
+        description: Unit test
         type: boolean
         default: true
     secrets:
@@ -19,28 +20,13 @@ jobs:
     steps:
       - name: Checkout code
         if: ${{ inputs.test }}
-        uses: actions/checkout@v3
-      - name: Setup Node.js environment
+        uses: silver886/github-actions/checkout@master
+      - name: Setup Node.js
         if: ${{ inputs.test }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-      - name: Cache pnpm modules
+        uses: silver886/github-actions/setup/nodejs@master
+      - name: Setup pnpm
         if: ${{ inputs.test }}
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
-      - name: Clean install dependencies
-        if: ${{ inputs.test }}
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-          run_install: |
-            args: [--frozen-lockfile]
+        uses: silver886/github-actions/setup/pnpm@master
       - name: Test
         if: ${{ inputs.test }}
         run: pnpm test
@@ -54,25 +40,11 @@ jobs:
       packages: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
-      - name: Clean install dependencies
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-          run_install: |
-            args: [--frozen-lockfile]
+        uses: silver886/github-actions/checkout@master
+      - name: Setup Node.js
+        uses: silver886/github-actions/setup/nodejs@master
+      - name: Setup pnpm
+        uses: silver886/github-actions/setup/pnpm@master
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:
@@ -91,25 +63,11 @@ jobs:
       contents: read
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          check-latest: true
-      - name: Cache pnpm modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-
-      - name: Clean install dependencies
-        uses: pnpm/action-setup@v2
-        with:
-          version: 7
-          run_install: |
-            args: [--frozen-lockfile]
+        uses: silver886/github-actions/checkout@master
+      - name: Setup Node.js
+        uses: silver886/github-actions/setup/nodejs@master
+      - name: Setup pnpm
+        uses: silver886/github-actions/setup/pnpm@master
       - name: Setup Node.js environment
         uses: actions/setup-node@v3
         with:

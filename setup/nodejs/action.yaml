@@ -1,0 +1,11 @@
+name: Setup Node.js
+description: Setup Node.js 18
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        check-latest: true
