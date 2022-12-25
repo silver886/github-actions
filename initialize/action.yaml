@@ -21,6 +21,6 @@ runs:
       run: |
         echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
         echo "time=$(date +'%T')" >> $GITHUB_OUTPUT
-        echo "rfc3339=$(date +'%Y-%m-%dT%TZ')" >> $GITHUB_OUTPUT
+        echo "rfc3339=$(date +'%Y-%m-%dT%T%z')" >> $GITHUB_OUTPUT
     - name: Checkout code
       uses: actions/checkout@v3
