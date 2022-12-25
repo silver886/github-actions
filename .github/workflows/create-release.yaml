@@ -11,6 +11,6 @@ jobs:
       contents: write
     steps:
       - name: Create release
-        uses: softprops/action-gh-release@v1
+        uses: silver886/github-actions/create/release@master
         with:
           name: Release ${{ github.ref_name }}

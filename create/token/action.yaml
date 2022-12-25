@@ -1,0 +1,31 @@
+name: Create Token
+description: Create token
+
+inputs:
+  # https://github.com/getsentry/action-github-app-token/blob/main/action.yml
+  app_id:
+    required: true
+    description: 'GitHub App ID'
+  private_key:
+    required: true
+    description: 'Private key for the GitHub App'
+  scope:
+    required: false
+    description: 'Scope of installation account'
+    default: ''
+
+outputs:
+  token:
+    description: 'Github Token for App installation'
+    value: ${{ steps.token.outputs.token }}
+
+runs:
+  using: composite
+  steps:
+    - name: Create token
+      id: token
+      uses: getsentry/action-github-app-token@v1
+      with:
+        app_id: ${{ inputs.app_id }}
+        private_key: ${{ inputs.private_key }}
+        scope: ${{ inputs.scope }}

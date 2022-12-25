@@ -46,7 +46,7 @@ jobs:
       - name: Setup pnpm
         uses: silver886/github-actions/setup/pnpm@master
       - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: silver886/github-actions/setup/nodejs@master
         with:
           scope: ${{ github.repository_owner }}
           registry-url: https://npm.pkg.github.com/
@@ -69,7 +69,7 @@ jobs:
       - name: Setup pnpm
         uses: silver886/github-actions/setup/pnpm@master
       - name: Setup Node.js environment
-        uses: actions/setup-node@v3
+        uses: silver886/github-actions/setup/nodejs@master
         with:
           scope: ${{ github.repository_owner }}
           registry-url: https://registry.npmjs.org/

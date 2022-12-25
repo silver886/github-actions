@@ -1,11 +1,20 @@
 name: Setup Node.js
 description: Setup Node.js 18
 
+inputs:
+  # https://github.com/actions/setup-node/blob/main/action.yml
+  scope:
+    description: 'Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).'
+  registry-url:
+    description: 'Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN.'
+
 runs:
   using: composite
   steps:
-    - name: Setup Node.js environment
+    - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: 18
         check-latest: true
+        scope: ${{ inputs.scope }}
+        registry-url: ${{ inputs.registry-url }}

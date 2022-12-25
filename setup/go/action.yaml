@@ -1,0 +1,11 @@
+name: Setup Go
+description: Setup Go 1.19
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '~1.19'
+        check-latest: true

@@ -2,18 +2,19 @@ name: Create Pull Request
 description: Create pull request
 
 inputs:
+  # https://github.com/peter-evans/create-pull-request/blob/main/action.yml
+  token:
+    description: 'GITHUB_TOKEN or a `repo` scoped Personal Access Token (PAT)'
+    default: ${{ github.token }}
   body:
-    required: false
-    description: Body of pull request
+    description: 'The body of the pull request.'
     default: ''
   assignees:
-    required: false
-    description: Assignees of pull request
+    description: 'A comma or newline separated list of assignees (GitHub usernames).'
     default: |
       silver886
   reviewers:
-    required: false
-    description: Reviewers of pull request
+    description: 'A comma or newline separated list of reviewers (GitHub usernames) to request a review from.'
     default: |
       silver886
 
@@ -26,6 +27,7 @@ runs:
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       with:
+        token: ${{ inputs.token }}
         branch: continuous-update/${{ steps.time.outputs.date }}
         branch-suffix: timestamp
         delete-branch: true
