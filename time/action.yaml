@@ -19,8 +19,7 @@ runs:
       id: time
       shell: sh
       run: |
+        export TZ=UTC
         echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
         echo "time=$(date +'%T')" >> $GITHUB_OUTPUT
-        echo "rfc3339=$(date +'%Y-%m-%dT%T%:z')" >> $GITHUB_OUTPUT
-        date --rfc3339=seconds
-        date --iso8601=seconds
+        echo "rfc3339=$(date +'%Y-%m-%dT%TZ')" >> $GITHUB_OUTPUT
