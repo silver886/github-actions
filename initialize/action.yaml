@@ -1,0 +1,17 @@
+name: Initialize
+description: Get current date and checkout repository
+
+outputs:
+  date:
+    description: Current date
+    value: ${{ steps.date.outputs.date }}
+
+runs:
+  using: composite
+  steps:
+    - name: Get current date
+      id: date
+      shell: sh
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+    - name: Checkout code
+      uses: actions/checkout@v3
