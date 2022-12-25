@@ -1,17 +1,26 @@
 name: Initialize
-description: Get current date and checkout repository
+description: Get current date and time and checkout repository
 
 outputs:
   date:
     description: Current date
-    value: ${{ steps.date.outputs.date }}
+    value: ${{ steps.date-time.outputs.date }}
+  time:
+    description: Current time
+    value: ${{ steps.date-time.outputs.time }}
+  rfc3339:
+    description: Current time
+    value: ${{ steps.date-time.outputs.rfc3339 }}
 
 runs:
   using: composite
   steps:
-    - name: Get current date
-      id: date
+    - name: Get current date and time
+      id: date-time
       shell: sh
-      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+      run: |
+        echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+        echo "time=$(date +'%T')" >> $GITHUB_OUTPUT
+        echo "rfc3339=$(date +'%Y-%m-%dT%TZ')" >> $GITHUB_OUTPUT
     - name: Checkout code
       uses: actions/checkout@v3
