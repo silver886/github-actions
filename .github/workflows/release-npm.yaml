@@ -14,18 +14,20 @@ jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
-    if: ${{ inputs.test }}
     permissions:
       contents: read
     steps:
       - name: Checkout code
+        if: ${{ inputs.test }}
         uses: actions/checkout@v3
       - name: Setup Node.js environment
+        if: ${{ inputs.test }}
         uses: actions/setup-node@v3
         with:
           node-version: 18
           check-latest: true
       - name: Cache pnpm modules
+        if: ${{ inputs.test }}
         uses: actions/cache@v3
         with:
           path: ~/.pnpm-store
@@ -33,12 +35,14 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-
       - name: Clean install dependencies
+        if: ${{ inputs.test }}
         uses: pnpm/action-setup@v2
         with:
           version: 7
           run_install: |
             args: [--frozen-lockfile]
       - name: Test
+        if: ${{ inputs.test }}
         run: pnpm test
 
   publish-github:
