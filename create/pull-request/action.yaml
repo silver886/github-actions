@@ -21,6 +21,13 @@ inputs:
 runs:
   using: composite
   steps:
+    - name: Setup pnpm
+      continue-on-error: true
+      uses: silver886/github-actions/setup/pnpm@master
+    - name: Format code
+      continue-on-error: true
+      shell: sh
+      run: pnpm format
     - name: Get time
       id: time
       uses: silver886/github-actions/time@master
