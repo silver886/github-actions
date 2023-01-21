@@ -24,7 +24,7 @@ runs:
   steps:
     - name: Create token
       id: token
-      uses: getsentry/action-github-app-token@v1
+      uses: getsentry/action-github-app-token@v2
       with:
         app_id: ${{ inputs.app_id }}
         private_key: ${{ inputs.private_key }}
