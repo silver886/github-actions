@@ -33,11 +33,20 @@ Create a new branch with current date and a pull request.
 
 #### Inputs
 
-- `app_id`: GitHub App ID. [^3]
-- `private_key`: Private key for the GitHub App. [^3]
-- `scope`: Scope of installation account. [^3]
+- `app-id`: GitHub App ID. [^3]
+- `private-key`: GitHub App private key. [^3]
+- `owner`: The owner of the GitHub App installation (defaults to current repository owner). [^3]
+- `repositories`: Comma or newline-separated list of repositories to install the GitHub App on (defaults to current repository if owner is unset). [^3]
+- `skip-token-revoke`: If truthy, the token will not be revoked when the current job is complete. [^3]
+- `github-api-url`: he URL of the GitHub REST API. [^3]
 
-[^3]: https://github.com/getsentry/action-github-app-token/blob/main/action.yml
+#### Outputs
+
+- `token`: GitHub installation access token. [^3]
+- `installation-id`: GitHub App installation ID. [^3]
+- `app-slug`: GitHub App slug. [^3]
+
+[^3]: https://github.com/actions/create-github-app-token/blob/main/action.yml
 
 ### `setup/nodejs`
 

@@ -2,30 +2,49 @@ name: Create Token
 description: Create token
 
 inputs:
-  # https://github.com/getsentry/action-github-app-token/blob/main/action.yml
-  app_id:
+  # https://github.com/actions/create-github-app-token/blob/main/action.yml
+  app-id:
     required: true
-    description: 'GitHub App ID'
-  private_key:
+    description: "GitHub App ID"
+  private-key:
     required: true
-    description: 'Private key for the GitHub App'
-  scope:
+    description: "GitHub App private key"
+  owner:
+    description: "The owner of the GitHub App installation (defaults to current repository owner)"
     required: false
-    description: 'Scope of installation account'
-    default: ''
+  repositories:
+    description: "Comma or newline-separated list of repositories to install the GitHub App on (defaults to current repository if owner is unset)"
+    required: false
+  skip-token-revoke:
+    description: "If truthy, the token will not be revoked when the current job is complete"
+    required: false
+  # Make GitHub API configurable to support non-GitHub Cloud use cases
+  # see https://github.com/actions/create-github-app-token/issues/77
+  github-api-url:
+    description: The URL of the GitHub REST API.
+    default: ${{ github.api_url }}
 
 outputs:
   token:
-    description: 'Github Token for App installation'
+    description: "GitHub installation access token"
     value: ${{ steps.token.outputs.token }}
+  installation-id:
+    description: "GitHub App installation ID"
+    value: ${{ steps.token.outputs.installation-id }}
+  app-slug:
+    description: "GitHub App slug"
+    value: ${{ steps.token.outputs.app-slug }}
 
 runs:
   using: composite
   steps:
     - name: Create token
       id: token
-      uses: getsentry/action-github-app-token@v2
+      uses: actions/create-github-app-token@v2
       with:
-        app_id: ${{ inputs.app_id }}
-        private_key: ${{ inputs.private_key }}
-        scope: ${{ inputs.scope }}
+        app-id: ${{ inputs.app-id }}
+        private-key: ${{ inputs.private-key }}
+        owner: ${{ inputs.owner }}
+        repositories: ${{ inputs.repositories }}
+        skip-token-revoke: ${{ inputs.skip-token-revoke }}
+        github-api-url: ${{ inputs.github-api-url }}
