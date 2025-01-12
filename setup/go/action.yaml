@@ -1,11 +1,16 @@
 name: Setup Go
-description: Setup Go 1.19
+description: Setup Go
+
+inputs:
+  go-version:
+    description: 'The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.'
+    default: '~1.19'
 
 runs:
   using: composite
   steps:
     - name: Setup Go
-      uses: actions/setup-go@v3
+      uses: actions/setup-go@v5
       with:
-        go-version: '~1.19'
+        go-version: ${{ inputs.go-version }}
         check-latest: true

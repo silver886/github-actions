@@ -48,6 +48,15 @@ Create a new branch with current date and a pull request.
 
 [^3]: https://github.com/actions/create-github-app-token/blob/main/action.yml
 
+### `setup/go`
+
+Setup Go.
+
+#### Inputs
+- `go-version`: The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks. [^5]
+
+[^5]: https://github.com/actions/setup-go/blob/main/action.yml
+
 ### `setup/nodejs`
 
 Setup Node.js 18.
