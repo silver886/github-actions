@@ -1,8 +1,11 @@
 name: Setup Node.js
-description: Setup Node.js 18
+description: Setup Node.js
 
 inputs:
   # https://github.com/actions/setup-node/blob/main/action.yml
+  node-version:
+    description: 'Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.'
+    default: '18'
   scope:
     description: 'Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).'
   registry-url:
@@ -12,9 +15,9 @@ runs:
   using: composite
   steps:
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: ${{ inputs.node-version }}
         check-latest: true
         scope: ${{ inputs.scope }}
         registry-url: ${{ inputs.registry-url }}

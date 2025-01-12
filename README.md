@@ -59,10 +59,11 @@ Setup Go.
 
 ### `setup/nodejs`
 
-Setup Node.js 18.
+Setup Node.js.
 
 #### Inputs
 
+- `node-version`: Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0. [^1]
 - `scope`: Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/). [^1]
 - `registry-url`: Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN. [^1]
 
