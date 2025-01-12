@@ -32,7 +32,7 @@ runs:
       id: time
       uses: silver886/github-actions/time@master
     - name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
+      uses: peter-evans/create-pull-request@v7
       with:
         token: ${{ inputs.token }}
         branch: continuous-update/${{ steps.time.outputs.date }}
