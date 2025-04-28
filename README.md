@@ -101,3 +101,21 @@ Release npm package.
 #### Secrets
 
 - `NPM`: NPM token.
+
+### `release-oci`
+
+Release OCI Image.
+
+#### Inputs
+
+- `registry`: (Optional) Hostname for registry (Default: `ghcr.io`)
+- `username`: (Optional) Username for registry (Default: `${{ github.repository_owner }}`)
+- `containerfile`: (Optional) Pathname of a Containerfile (Default: `Containerfile`)
+- `image_name`: (Optional) Image name (Default: `${{ github.repository }}`)
+- `image_tags`: Image tags, in JSON array of string
+- `context`: (Optional) Path of the context (Default: `.`)
+- `build_arg`: (Optional) Additional build arguments (Default: `''`)
+
+#### Secrets
+
+- `password`: Password for registry.

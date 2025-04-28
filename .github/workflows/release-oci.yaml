@@ -1,0 +1,89 @@
+name: Release OCI Image
+
+on:
+  workflow_call:
+    inputs:
+      registry:
+        description: Hostname for registry
+        type: string
+        default: ghcr.io
+      username:
+        description: Username for registry
+        type: string
+        default: ${{ github.repository_owner }}
+      containerfile:
+        description: Pathname of a Containerfile
+        type: string
+        default: Containerfile
+      image_name:
+        description: Image name
+        type: string
+        default: ${{ github.repository }}
+      image_tags:
+        description: Image tags, in JSON array of string
+        type: string
+        required: true
+      context:
+        description: Path of the context
+        type: string
+        default: '.'
+      build_arg:
+        description: Additional build arguments
+        type: string
+        default: ''
+    secrets:
+      password:
+        description: Password for registry
+        required: false
+
+jobs:
+  publish:
+    name: Publish to Registry
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout code
+        uses: silver886/github-actions/checkout@master
+      - name: Get time
+        id: time
+        uses: silver886/github-actions/time@master
+      - name: Generate image tag
+        id: tag
+        shell: sh
+        run: |
+          IMAGE_TAG=$(tr -dc '[:lower:][:digit:]' < /dev/urandom | head -c 16)
+          echo "tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
+      - name: Build image
+        id: build
+        shell: sh
+        run: |
+          podman build \
+            --file ${{ inputs.containerfile }} \
+            --label org.opencontainers.image.created=${{ steps.time.outputs.rfc3339 }} \
+            --label org.opencontainers.image.url=${{ github.server_url }}/${{ github.repository }} \
+            --label org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }} \
+            --label org.opencontainers.image.version=${{ github.ref_name }} \
+            --label org.opencontainers.image.revision=${{ github.sha }} \
+            --tag ${{ steps.tag.outputs.tag }} \
+            ${{ inputs.build_arg }} \
+            ${{ inputs.context }}
+      - name: Tag image
+        shell: sh
+        run: |
+          for tag in $(echo '${{ inputs.image_tags }}' | jq -r '.[]'); do
+            podman tag ${{ steps.tag.outputs.tag }} ${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):$tag
+          done
+      - name: Login into registry
+        shell: sh
+        run: podman login --username="${{ inputs.username }}" --password="${{ secrets.password || github.token }}" "${{ inputs.registry }}"
+      - name: Tag image
+        shell: sh
+        run: |
+          for tag in $(echo '${{ inputs.image_tags }}' | jq -r '.[]'); do
+            podman push ${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):$tag
+          done
+      - name: Logout from registry
+        shell: sh
+        run: podman logout "${{ inputs.registry }}"
