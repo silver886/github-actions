@@ -71,7 +71,7 @@ Setup Node.js.
 
 ### `setup/pnpm`
 
-Setup pnpm 7 and clean install dependencies.
+Setup pnpm 10 and clean install dependencies.
 
 ### `time`
 
