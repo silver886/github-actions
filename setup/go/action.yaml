@@ -4,7 +4,7 @@ description: Setup Go
 inputs:
   go-version:
     description: 'The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks.'
-    default: '~1.19'
+    default: '~1.24'
 
 runs:
   using: composite
