@@ -1,0 +1,90 @@
+name: Deploy Cloudflare TrueNAS
+
+on:
+  workflow_call:
+    inputs:
+      uri:
+        description: URI for TrueNAS API endpoint
+        type: string
+        required: true
+      client_id:
+        description: Client ID for Cloudflare Access
+        type: string
+        required: true
+      registry:
+        description: Hostname for registry
+        type: string
+        default: ghcr.io
+      username:
+        description: Username for registry
+        type: string
+        default: ''
+      image_name:
+        description: Image name
+        type: string
+        default: ${{ github.repository }}
+      image_tag:
+        description: Image tag
+        type: string
+        default: latest
+      apps:
+        description: App names, in JSON array of string
+        type: string
+        required: true
+    secrets:
+      client_secret:
+        description: Client Secret for Cloudflare Access
+        required: true
+      api_key:
+        description: API key for TrueNAS
+        required: true
+      password:
+        description: Password for registry
+        required: false
+
+jobs:
+  deploy-image:
+    name: Deploy image
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Setup Cloudflare TrueNAS client
+        shell: sh
+        run: pip install git+https://github.com/silver886/truenas-api-client@cloudflare
+      - name: Pull image
+        shell: sh
+        run: |
+          midclt \
+            --uri ${{ inputs.uri }} \
+            --cloudflare-access-client-id=${{ inputs.client_id }} \
+            --cloudflare-access-client-secret=${{ secrets.client_secret }} \
+            --api-key=${{ secrets.api_key }} \
+            call --job --job-print=progressbar \
+            app.image.pull "{ \
+              \"image\": \"${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):${{ inputs.image_tag }}\", \
+              \"auth_config\": { \
+                \"username\": \"${{ inputs.username }}\", \
+                \"password\": \"${{ secrets.password }}\" \
+              } \
+            }"
+
+  deploy-app:
+    name: Deploy app
+    runs-on: ubuntu-24.04
+    needs: deploy-image
+    strategy:
+      matrix:
+        app: ${{ fromJSON(inputs.apps) }}
+    steps:
+      - name: Setup Cloudflare TrueNAS client
+        shell: sh
+        run: pip install git+https://github.com/silver886/truenas-api-client@cloudflare
+      - name: Redeploy ${{ matrix.app }}
+        shell: sh
+        run: |
+          midclt \
+            --uri ${{ inputs.uri }} \
+            --cloudflare-access-client-id=${{ inputs.client_id }} \
+            --cloudflare-access-client-secret=${{ secrets.client_secret }} \
+            --api-key=${{ secrets.api_key }} \
+            call --job --job-print=progressbar \
+            app.redeploy '${{ matrix.app }}'

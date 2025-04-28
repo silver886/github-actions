@@ -108,14 +108,34 @@ Release OCI Image.
 
 #### Inputs
 
-- `registry`: (Optional) Hostname for registry (Default: `ghcr.io`)
-- `username`: (Optional) Username for registry (Default: `${{ github.repository_owner }}`)
-- `containerfile`: (Optional) Pathname of a Containerfile (Default: `Containerfile`)
-- `image_name`: (Optional) Image name (Default: `${{ github.repository }}`)
-- `image_tags`: Image tags, in JSON array of string
-- `context`: (Optional) Path of the context (Default: `.`)
-- `build_arg`: (Optional) Additional build arguments (Default: `''`)
+- `registry`: (Optional) Hostname for registry. (Default: `ghcr.io`)
+- `username`: (Optional) Username for registry. (Default: `${{ github.repository_owner }}`)
+- `containerfile`: (Optional) Pathname of a Containerfile. (Default: `Containerfile`)
+- `image_name`: (Optional) Image name. (Default: `${{ github.repository }}`)
+- `image_tags`: Image tags, in JSON array of string.
+- `context`: (Optional) Path of the context. (Default: `.`)
+- `build_arg`: (Optional) Additional build arguments. (Default: `''`)
 
 #### Secrets
 
-- `password`: Password for registry.
+- `password`: (Optional) Password for registry.
+
+### `deploy-cloudflare-truenas`
+
+Deploy Cloudflare TrueNAS.
+
+#### Inputs
+
+- `uri`: URI for TrueNAS API endpoint.
+- `client_id`: Client ID for Cloudflare Access.
+- `registry`: (Optional) Hostname for registry. (Default: `ghcr.io`)
+- `username`: (Optional) Username for registry. (Default: `''`)
+- `image_name`: (Optional) Image name. (Default: `${{ github.repository }}`)
+- `image_tag`: (Optional) Image tag. (Default: `latest`)
+- `apps`: App names, in JSON array of string.
+
+#### Secrets
+
+- `client_secret`: Client Secret for Cloudflare Access.
+- `api_key`: API key for TrueNAS.
+- `password`: (Optional) Password for registry.
