@@ -17,7 +17,7 @@ Create a new branch with current date and a pull request.
 - `assignees`: A comma or newline separated list of assignees (GitHub usernames). [^4]
 - `reviewers`: A comma or newline separated list of reviewers (GitHub usernames) to request a review from. [^4]
 
-[^4]: https://github.com/peter-evans/create-pull-request/blob/main/action.yml
+[^4]: <https://github.com/peter-evans/create-pull-request/blob/main/action.yml>
 
 ### `create/release`
 
@@ -27,7 +27,7 @@ Create a new branch with current date and a pull request.
 - `files`: Newline-delimited list of path globs for asset files to upload. [^2]
 - `body_path`: Path to load note-worthy description of changes in release from. [^2]
 
-[^2]: https://github.com/softprops/action-gh-release/blob/master/action.yml
+[^2]: <https://github.com/softprops/action-gh-release/blob/master/action.yml>
 
 ### `create/token`
 
@@ -46,16 +46,17 @@ Create a new branch with current date and a pull request.
 - `installation-id`: GitHub App installation ID. [^3]
 - `app-slug`: GitHub App slug. [^3]
 
-[^3]: https://github.com/actions/create-github-app-token/blob/main/action.yml
+[^3]: <https://github.com/actions/create-github-app-token/blob/main/action.yml>
 
 ### `setup/go`
 
 Setup Go.
 
 #### Inputs
+
 - `go-version`: The Go version to download (if necessary) and use. Supports semver spec and ranges. Be sure to enclose this option in single quotation marks. [^5]
 
-[^5]: https://github.com/actions/setup-go/blob/main/action.yml
+[^5]: <https://github.com/actions/setup-go/blob/main/action.yml>
 
 ### `setup/nodejs`
 
@@ -64,10 +65,10 @@ Setup Node.js.
 #### Inputs
 
 - `node-version`: Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0. [^1]
-- `scope`: Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/). [^1]
+- `scope`: Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (<https://npm.pkg.github.com/>). [^1]
 - `registry-url`: Optional registry to set up for auth. Will set the registry in a project level .npmrc and .yarnrc file, and set up auth to read in from env.NODE_AUTH_TOKEN. [^1]
 
-[^1]: https://github.com/actions/setup-node/blob/main/action.yml
+[^1]: <https://github.com/actions/setup-node/blob/main/action.yml>
 
 ### `setup/pnpm`
 
