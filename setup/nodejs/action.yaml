@@ -5,7 +5,7 @@ inputs:
   # https://github.com/actions/setup-node/blob/main/action.yml
   node-version:
     description: 'Version Spec of the version to use. Examples: 12.x, 10.15.1, >=10.15.0.'
-    default: '18'
+    default: '22'
   scope:
     description: 'Optional scope for authenticating against scoped registries. Will fall back to the repository owner when using the GitHub Packages registry (https://npm.pkg.github.com/).'
   registry-url:
