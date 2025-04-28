@@ -14,7 +14,7 @@ on:
 jobs:
   test:
     name: Test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
@@ -34,7 +34,7 @@ jobs:
   publish-github:
     name: Publish to GitHub Package Registry
     needs: test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
@@ -58,7 +58,7 @@ jobs:
   publish-npm:
     name: Publish to npm
     needs: test
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
