@@ -73,7 +73,7 @@ jobs:
         shell: sh
         run: |
           for tag in $(echo '${{ inputs.image_tags }}' | jq -r '.[]'); do
-            podman tag ${{ steps.tag.outputs.tag }} ${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):$tag
+            podman tag ${{ steps.tag.outputs.tag }} ${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):$(echo "$tag" | tr '/' '-')
           done
       - name: Login into registry
         shell: sh
@@ -82,7 +82,7 @@ jobs:
         shell: sh
         run: |
           for tag in $(echo '${{ inputs.image_tags }}' | jq -r '.[]'); do
-            podman push ${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):$tag
+            podman push ${{ inputs.registry }}/$(echo '${{ inputs.image_name }}' | tr '[:upper:]' '[:lower:]'):$(echo "$tag" | tr '/' '-')
           done
       - name: Logout from registry
         shell: sh
