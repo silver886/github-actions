@@ -78,7 +78,7 @@ jobs:
       - name: Login into registry
         shell: sh
         run: podman login --username="${{ inputs.username }}" --password="${{ secrets.password || github.token }}" "${{ inputs.registry }}"
-      - name: Tag image
+      - name: Push image
         shell: sh
         run: |
           for tag in $(echo '${{ inputs.image_tags }}' | jq -r '.[]'); do
